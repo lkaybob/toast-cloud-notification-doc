@@ -1,0 +1,114 @@
+swagger: '2.0'
+info:
+  title: Toast Cloud SMS API Specification
+  version: '1.0'
+  description: Toast Cloud SMS API Specification
+host: "api-sms.cloud.toast.com"
+basePath: /sms/v2.2/appKeys/
+schemes:
+  - https
+paths:
+  /{appKey}/sender/sms:
+    post:
+      summary: 단문 SMS 발송
+      operationId: sendSMS
+      description: 최대 255자 이내
+      consumes:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: appKey
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/messageRequestBody"
+      responses:
+        200:
+          description: 너무 길어서 생략
+  /{appKey}/sender/mms:
+    post:
+      summary: 장문 SMS 발송
+      operationId: sendMmsWithoutAttachment
+      description: 최대 4000자 이내
+      consumes:
+      - application/json;charset=UTF-8
+      parameters:
+      - name: appKey
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: "#/definitions/messageRequestBody"
+      - name: Referer
+        in: header
+        type: string
+        default: ""
+      responses:
+        200:
+          description: 너무 길어서 생략
+definitions:
+  recipient:
+    type: object
+    properties:
+      recipientNo:
+        type: string
+        maxLength: 50
+        description: 수신번호 (countryCode와 조합하여 사용 가능, 최대 1000명)
+      countryCode:
+        type: string
+        maxLength: 255
+        description: "국가 번호 [기본값: 82(한국)]"
+      internationalRecipientNo:
+        type: string
+        description: "국가 번호가 포함된 수신 번호 [예)821012345678, recipientNo가 있을 경우 이 값은 무시된다.]"
+      templateParameter:
+        $ref: "#/definitions/templateParameter"
+      recipientGroupingKey:
+        type: string
+        maxLength: 100
+  templateParameter:
+    type: object
+    properties:
+      key:
+        type: string
+        description: "치환 키(##key##)"
+      value:
+        type: string
+        description: "치환 키에 매핑되는 Value값"
+  messageRequestBody:
+    type: object
+    description: 문자 발송에 필요한 
+    required: [body, sendNo, recipientList]
+    properties:
+      templateId:
+        type: string
+        maxLength: 50
+        description: 발송 템플릿 ID (단문 50Byte, 장문 4000바이트 제한)
+      body:
+        type: string
+        maxLength: 255
+        description: 본문 내용
+      sendNo:
+        type: string
+        maxLength: 13
+        description: 발신 번호
+      requestDate:
+        type: string
+        format: yyyy-MM-dd HH:mm
+        description: 예약 일시
+      sendingGroupingKey:
+        type: string
+        description: 발신자 그룹키
+      recipientList:
+        type: array
+        items:
+          $ref: "#/definitions/recipient"
+      userId:
+        type: string
+        maxLength: 100

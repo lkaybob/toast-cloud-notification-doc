@@ -27,7 +27,7 @@ paths:
         in: body
         required: true
         schema:
-          $ref: "#/definitions/messageRequestBody"
+          $ref: "#/definitions/smsBody"
       responses:
         200:
           description: 너무 길어서 생략
@@ -91,7 +91,7 @@ paths:
         in: body
         required: true
         schema:
-          $ref: "#/definitions/messageRequestBody"
+          $ref: "#/definitions/mmsBody"
       responses:
         200:
           description: 너무 길어서 생략
@@ -169,7 +169,7 @@ definitions:
       value:
         type: string
         description: "치환 키에 매핑되는 Value값"
-  messageBody:
+  smsBody:
     type: object
     description: 문자 발송 요청에 필요한 정보들
     required: [body, sendNo, recipientList]
@@ -177,11 +177,46 @@ definitions:
       templateId:
         type: string
         maxLength: 50
-        description: 발송 템플릿 ID (단문 50Byte, 장문 4000바이트 제한)
+        description: 발송 템플릿 ID
       body:
         type: string
-        maxLength: 255
-        description: 본문 내용 (개행은 \n으로)
+        maxLength: 90
+        description: 본문 내용 (개행은 \n으로, 표준 90 Byte)
+      sendNo:
+        type: string
+        maxLength: 13
+        description: 발신 번호
+      requestDate:
+        type: string
+        format: yyyy-MM-dd HH:mm
+        description: 예약 일시
+      sendingGroupingKey:
+        type: string
+        description: 발신자 그룹키
+      recipientList:
+        type: array
+        items:
+          $ref: "#/definitions/recipient"
+      userId:
+        type: string
+        maxLength: 100
+  mmsBody:
+    type: object
+    description: 문자 발송 요청에 필요한 정보들
+    required: [title,body, sendNo, recipientList]
+    properties:
+      templateId:
+        type: string
+        maxLength: 50
+        description: 발송 템플릿 ID
+      title:
+        type: string
+        maxLength: 40
+        description: 메세지 제목 (표준 40Byte)
+      body:
+        type: string
+        maxLength: 2000
+        description: 본문 내용 (개행은 \n으로, 장문 표준 2000바이트)
       sendNo:
         type: string
         maxLength: 13

@@ -1,0 +1,8 @@
+{
+  "variableNamingConvention": "camelCase",
+  "composerProjectName": "toast-cloud-sms-php",
+  "packagePath": "toast-cloud-sms-php",
+  "invokerPackage": "ToastCloud",
+  "gitUserId": "lkaybob",
+  "gitRepoId": "toast-cloud-sms-php"
+}

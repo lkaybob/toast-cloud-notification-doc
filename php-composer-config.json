@@ -1,8 +1,0 @@
-{
-  "variableNamingConvention": "camelCase",
-  "composerProjectName": "toast-cloud-notification-php",
-  "packagePath": "toast-cloud-notification-php",
-  "invokerPackage": "ToastCloud",
-  "gitUserId": "lkaybob",
-  "gitRepoId": "toast-cloud-notification-php"
-}

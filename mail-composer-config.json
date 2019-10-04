@@ -1,0 +1,8 @@
+{
+  "variableNamingConvention": "camelCase",
+  "composerProjectName": "toast-cloud-mail-php",
+  "packagePath": "toast-cloud-mail-php",
+  "invokerPackage": "ToastCloud",
+  "gitUserId": "lkaybob",
+  "gitRepoId": "toast-cloud-mail-php"
+}
